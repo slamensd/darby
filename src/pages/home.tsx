@@ -1,15 +1,11 @@
 import { Link } from 'wouter';
 import { ArrowRight, FileText, ShieldCheck, Lock, FlaskConical } from 'lucide-react';
-import { Reveal, Src, useMeta } from '@/components/site';
+import { Reveal, Src } from '@/components/site';
 import { HeroVideo } from '@/components/hero-video';
 import { MARKETS, PRODUCTS, SRC, TIMELINE } from '@/data';
 import { WarehouseMap } from '@/components/warehouse-map';
 
 export default function Home() {
-  useMeta(
-    'Darby Trading · Palm-based ingredient trading house since 1992',
-    'Darby Trading imports, stocks and delivers palm-based fats and fatty acids for dairy rations, bakery and confectionery across the United States. Since 1992. Purchase, New York.',
-  );
   const animal = PRODUCTS.filter((p) => p.line === 'animal');
   const food = PRODUCTS.filter((p) => p.line === 'food');
   return (

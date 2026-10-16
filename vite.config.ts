@@ -2,6 +2,7 @@ import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
+import { seoPlugin } from './seo-plugin';
 
 // Works locally and on static hosts, while honoring Replit's managed settings.
 const port = Number(process.env.PORT || 5173);
@@ -11,7 +12,7 @@ if (!Number.isInteger(port) || port <= 0 || port > 65535) {
 
 export default defineConfig({
   base: process.env.BASE_PATH || '/',
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), seoPlugin()],
   resolve: {
     alias: { '@': path.resolve(import.meta.dirname, 'src') },
     dedupe: ['react', 'react-dom'],

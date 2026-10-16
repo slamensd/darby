@@ -4,7 +4,7 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Route, Switch, useLocation, Link, Router as WouterRouter } from 'wouter';
-import { Layout, useMeta } from '@/components/site';
+import { Layout } from '@/components/site';
 import Home from '@/pages/home';
 import Products, { ProductDetail } from '@/pages/products';
 import Logistics from '@/pages/logistics';
@@ -14,7 +14,6 @@ import Quote from '@/pages/quote';
 const queryClient = new QueryClient();
 
 function Missing() {
-  useMeta('Page not found · Darby Trading', 'This page is not on the Darby Trading site.');
   return (
     <div className="wrap py-32">
       <p className="eyebrow text-[var(--leaf)]">404</p>

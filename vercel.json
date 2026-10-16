@@ -5,6 +5,14 @@
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist/public",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/products", "destination": "/products/index.html" },
+    { "source": "/products/:slug", "destination": "/products/:slug/index.html" },
+    { "source": "/logistics", "destination": "/logistics/index.html" },
+    { "source": "/compliance", "destination": "/compliance/index.html" },
+    { "source": "/trade-finance", "destination": "/trade-finance/index.html" },
+    { "source": "/about", "destination": "/about/index.html" },
+    { "source": "/documents", "destination": "/documents/index.html" },
+    { "source": "/request-a-quote", "destination": "/request-a-quote/index.html" },
+    { "source": "/contact", "destination": "/contact/index.html" }
   ]
 }

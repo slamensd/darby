@@ -1,7 +1,7 @@
 import { Link } from 'wouter';
 import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDown, ExternalLink, FileText } from 'lucide-react';
-import { EndAction, PageHero, Reveal, SectionHead, Src, useMeta } from '@/components/site';
+import { EndAction, PageHero, Reveal, SectionHead, Src } from '@/components/site';
 import { CONTACT, PRODUCERS, SRC, TIMELINE } from '@/data';
 
 function Faq({ items, id }: { items: [string, string][]; id: string }) {
@@ -29,7 +29,6 @@ const STATUS = (s: 'Sourced' | 'Pending' | 'Not held') => (
 );
 
 export function Compliance() {
-  useMeta('Compliance · RSPO membership, CBP rulings, registrations · Darby Trading', 'RSPO member no. 2-1713-26-000-00. Two US Customs rulings on the DT line, H312647 and H312954. The registry facts procurement and lenders ask for.');
   return (
     <>
       <PageHero id="compliance" eyebrow="Compliance" title="The registry facts, each linked to its source." lede="Procurement and credit teams should not have to take our word. Every entry below points to the public record or says plainly that the document is pending." />
@@ -84,7 +83,6 @@ export function Compliance() {
 }
 
 export function TradeFinance() {
-  useMeta('Trade finance and counterparty · Darby Trading', 'For lenders, credit insurers and overseas producers: origins, commodities, HS codes, cadence, ports and buyer segments of Darby Trading flows. KYC pack on request.');
   const kyc = `mailto:${CONTACT.email}?subject=${encodeURIComponent('KYC pack request')}&body=${encodeURIComponent('Institution:\nName and role:\nPurpose (credit line, credit insurance, supply terms):\n')}`;
   return (
     <>
@@ -169,7 +167,6 @@ export function TradeFinance() {
 }
 
 export function About() {
-  useMeta('About Darby Trading · Importing since 1992 · Purchase, New York', 'Darby Trading Incorporated, a palm-based ingredient trading house in Purchase, New York. Filed in New York in 1992. CEO Ryan Fales.');
   return (
     <>
       <PageHero id="about" eyebrow="About" title="A trading house with a public record since 1992." lede="Darby Trading imports palm-based fats, fatty acids and specialty oils from named producers in Malaysia and Indonesia and holds them at six US ports." />
@@ -245,7 +242,6 @@ const DOCS = [
 const docId = (cat: string) => (cat === 'Specification' ? 'specs' : cat === 'Safety' ? 'sds' : undefined);
 
 export function Documents() {
-  useMeta('Documents · Spec sheets, SDS, COAs and certificates · Darby Trading', 'One library for Darby Trading documents: RSPO membership, CBP rulings, specification sheets, safety data sheets, sample COAs, terms of sale and logo files.');
   return (
     <>
       <PageHero id="documents" eyebrow="Documents" title="Download what you need." lede="Registry records link straight to the issuer. Product documents are being collected from producers and go out on request until they are posted." />
@@ -281,7 +277,6 @@ export function Documents() {
 }
 
 export function Contact() {
-  useMeta('Contact Darby Trading · Purchase, New York', 'Darby Trading Incorporated, 3000 Westchester Ave, Suite 200A, Purchase, NY 10577. +1 914 701 0003. info@darbyinc.com.');
   return (
     <>
       <PageHero id="contact" eyebrow="Contact" title="Make a human reachable." lede="Call or write. You reach the people who price, ship and sign." />

@@ -3,10 +3,13 @@ import { Link, useLocation } from 'wouter';
 import { ArrowRight, Phone, Mail } from 'lucide-react';
 import { CONTACT, SRC } from '@/data';
 import { SiteHeader } from '@/components/site-header';
+import { getPageMeta, metaEntries, normalizePath, SITE_ORIGIN } from '@/lib/seo';
 
-export function useMeta(title: string, description: string) {
+function useMeta() {
+  const [location] = useLocation();
   useEffect(() => {
-    document.title = title;
+    const meta = getPageMeta(location);
+    document.title = meta.title;
     const setMeta = (selector: string, attribute: string, key: string, content: string) => {
       let meta = document.querySelector<HTMLMetaElement>(selector);
       if (!meta) {
@@ -16,12 +19,17 @@ export function useMeta(title: string, description: string) {
       }
       meta.setAttribute('content', content);
     };
-    setMeta('meta[name="description"]', 'name', 'description', description);
-    setMeta('meta[property="og:title"]', 'property', 'og:title', title);
-    setMeta('meta[property="og:description"]', 'property', 'og:description', description);
-    setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
-    setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
-  }, [title, description]);
+    for (const [attribute, key, content] of metaEntries(meta, location)) {
+      setMeta(`meta[${attribute}="${key}"]`, attribute, key, content);
+    }
+    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = `${SITE_ORIGIN}${normalizePath(location)}`;
+  }, [location]);
 }
 
 export function Reveal({ children, className = '', delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
@@ -90,6 +98,7 @@ function Footer() {
 }
 
 export function Layout({ children }: { children: ReactNode }) {
+  useMeta();
   const [location] = useLocation();
   useEffect(() => {
     const anchor = window.location.hash.slice(1);

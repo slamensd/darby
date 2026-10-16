@@ -1,7 +1,7 @@
 import { useMemo, type ReactNode } from 'react';
 import { Link, useLocation, useParams, useSearch } from 'wouter';
 import { ArrowLeft, ArrowRight, FileText, Search, X } from 'lucide-react';
-import { EndAction, PageHero, Src, useMeta } from '@/components/site';
+import { EndAction, PageHero, Src } from '@/components/site';
 import { APPS, PRODUCTS, SRC, type Product } from '@/data';
 
 const LINES = [
@@ -11,7 +11,6 @@ const LINES = [
 ];
 
 export default function Products() {
-  useMeta('Products · 23 palm-based fats, fatty acids and specialty oils · Darby Trading', 'Rumen-protected fats and calcium salts for animal nutrition. Cocoa butter replacers, shortenings and specialty oils for bakery and confectionery. HS codes and documents by SKU.');
   const search = useSearch();
   const [, navigate] = useLocation();
   const q = new URLSearchParams(search);
@@ -115,10 +114,6 @@ function Row({ k, v }: { k: string; v: ReactNode }) {
 export function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
   const p = PRODUCTS.find((x) => x.slug === slug);
-  useMeta(
-    p ? `${p.name} · ${p.line === 'animal' ? 'Animal nutrition' : 'Food ingredients'} · Darby Trading` : 'Product not found · Darby Trading',
-    p ? `${p.name}: ${p.plain} Imported and held in US port warehouses by Darby Trading. Request a quote or a sample.` : 'This product is not in the Darby Trading catalog.',
-  );
   if (!p) {
     return (
       <div className="wrap py-32 text-center">

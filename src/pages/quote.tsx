@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Check, Mail } from 'lucide-react';
-import { useMeta } from '@/components/site';
 import { Form } from '@/components/ui/form';
 import { CONTACT, PRODUCTS, WAREHOUSES } from '@/data';
 
@@ -40,7 +39,6 @@ function L({ label, n, req, error, children }: { label: string; n: string; req?:
 const field = 'field';
 
 export default function Quote() {
-  useMeta('Request a quote or sample · Darby Trading', 'Request a quote or sample for DT80, DT Calcium Salt, CHOCH 9503 and other palm-based ingredients. Product, volume, destination and timing. A trader replies within one business day.');
   const q = new URLSearchParams(useSearch());
   const [sent, setSent] = useState<string | null>(null);
   const form = useForm<F>({

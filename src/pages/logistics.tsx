@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { EndAction, PageHero, SectionHead, Src, useMeta } from '@/components/site';
+import { EndAction, PageHero, SectionHead, Src } from '@/components/site';
 import { WarehouseMap } from '@/components/warehouse-map';
 import { DISCHARGE, ORIGINS, SRC } from '@/data';
 
@@ -59,7 +59,6 @@ function Bars({ rows, id }: { rows: { port: string; n: number }[]; id: string })
 }
 
 export default function Logistics() {
-  useMeta('Logistics · Ports, warehouses and lanes · Darby Trading', 'Origin ports in Southeast Asia, US discharge ports from the customs record, and stock held at six US port warehouses. Pallet, truckload or tanker.');
   return (
     <>
       <PageHero id="logistics" eyebrow="Logistics" title="Stock held at six US ports, close to your plant." lede="Cargo lands at the port nearest the buyer and is held at one of six US port warehouses. Every lane below is on the public customs record." />
