@@ -30,22 +30,26 @@ export default function Home() {
         </div>
       </section>
 
-      <nav aria-label="Choose your route" className="border-b border-[var(--rule)] bg-white">
-        <div className="wrap grid md:grid-cols-3">
+      <nav id="audience-actions" aria-label="Choose your route" className="border-b border-[var(--rule)] bg-white">
+        <div className="wrap grid lg:grid-cols-3">
           {[
-            { t: 'I buy ingredients', d: 'Catalog, specs and stock by US port', h: '/products' },
-            { t: 'I produce ingredients', d: 'Our record as a counterparty for terms', h: '/trade-finance#suppliers' },
-            { t: 'I finance or insure trade', d: 'Trade flows, rulings and the KYC pack', h: '/trade-finance' },
+            { t: ['I buy', 'ingredients'], d: ['Catalog, specs and', 'stock by US port'], h: '/products' },
+            { t: ['I produce', 'ingredients'], d: ['Our counterparty record', 'for partnerships and terms'], h: '/trade-finance#suppliers' },
+            { t: ['I finance or', 'insure trade'], d: ['Trade flows, rulings', 'and the KYC pack'], h: '/trade-finance' },
           ].map((c, i) => (
             <Link
-              key={c.t}
+              key={c.h}
               href={c.h}
-              className={`group flex items-center justify-between gap-6 py-8 transition-colors hover:bg-[var(--paper)] md:py-10 ${i < 2 ? 'border-b md:border-b-0 md:border-r border-[var(--rule)]' : ''} ${i === 0 ? 'md:pr-8' : i === 1 ? 'md:px-8' : 'md:pl-8'}`}
+              className={`group flex items-center justify-between gap-4 py-8 transition-colors hover:bg-[var(--paper)] lg:px-6 lg:py-10 ${i < 2 ? 'border-b lg:border-b-0 lg:border-r border-[var(--rule)]' : ''}`}
               data-testid={`link-route-${i}`}
             >
               <span className="min-w-0">
-                <span className="serif block text-[28px] md:text-[32px] font-semibold leading-[1.1]">{c.t}</span>
-                <span className="mt-2 block text-[15px] text-[var(--slate)]">{c.d}</span>
+                <span className="serif block text-[28px] lg:text-[32px] font-semibold leading-[1.1]">
+                  {c.t.map((line, index) => <span key={line} className="block whitespace-nowrap">{index > 0 && ' '}{line}</span>)}
+                </span>
+                <span className="mt-2 block text-[15px] leading-[1.5] text-[var(--slate)]">
+                  {c.d.map((line, index) => <span key={line} className="block whitespace-nowrap">{index > 0 && ' '}{line}</span>)}
+                </span>
               </span>
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[var(--ink)] transition-colors group-hover:border-[var(--leaf)] group-hover:bg-[var(--leaf)] group-hover:text-[#FBFAF7]">
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
