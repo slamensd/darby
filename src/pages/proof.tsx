@@ -242,6 +242,8 @@ const DOCS = [
   { cat: 'Brand', t: 'Logo files', d: 'Wide, negative and mark', h: '/brand/DT-Logo-wide.png', ok: true },
 ];
 
+const docId = (cat: string) => (cat === 'Specification' ? 'specs' : cat === 'Safety' ? 'sds' : undefined);
+
 export function Documents() {
   useMeta('Documents · Spec sheets, SDS, COAs and certificates · Darby Trading', 'One library for Darby Trading documents: RSPO membership, CBP rulings, specification sheets, safety data sheets, sample COAs, terms of sale and logo files.');
   return (
@@ -265,9 +267,9 @@ export function Documents() {
             );
             const cls = `flex aspect-[3/4] flex-col justify-between rounded-[4px] border bg-white p-5 transition-transform duration-300 hover:-translate-y-1 ${d.ok ? 'border-[var(--rule)] shadow-[0_1px_0_#D9D6CF]' : 'border-dashed border-[#B8B4AB]'}`;
             return d.h ? (
-              <a key={d.t} href={d.h} target="_blank" rel="noreferrer" className={cls} data-testid={`card-document-${i}`}>{body}</a>
+              <a key={d.t} href={d.h} target="_blank" rel="noreferrer" id={docId(d.cat)} className={cls} data-testid={`card-document-${i}`}>{body}</a>
             ) : (
-              <a key={d.t} href={`mailto:${CONTACT.email}?subject=${encodeURIComponent(`Document request: ${d.t}`)}`} className={cls} data-testid={`card-document-${i}`}>{body}</a>
+              <a key={d.t} id={docId(d.cat)} href={`mailto:${CONTACT.email}?subject=${encodeURIComponent(`Document request: ${d.t}`)}`} className={cls} data-testid={`card-document-${i}`}>{body}</a>
             );
           })}
         </div>

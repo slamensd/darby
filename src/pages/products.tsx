@@ -46,7 +46,7 @@ export default function Products() {
       <PageHero id="products" eyebrow="Products · 23 SKUs in two lines" title="Specified product, sold under the name on your purchase order." lede="Rumen-protected fats and calcium salts for animal nutrition. Specialty fats, shortenings and cocoa butter replacers for bakery and confectionery." />
 
       <section className="wrap py-14">
-        <div className="sticky top-[72px] z-20 -mx-6 mb-8 border-b border-[var(--rule)] bg-[var(--paper)]/95 px-6 py-4 backdrop-blur">
+        <div id="catalog-filters" className="sticky top-[72px] z-20 -mx-6 mb-8 border-b border-[var(--rule)] bg-[var(--paper)]/95 px-6 py-4 backdrop-blur">
           <div className="flex flex-wrap items-center gap-3">
             <div className="seg max-w-full overflow-x-auto" role="tablist">
               {LINES.map((x) => (

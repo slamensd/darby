@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { Link, useLocation } from 'wouter';
-import { ArrowRight, ChevronDown, Menu, X, Phone, Mail } from 'lucide-react';
-import { CONTACT, PRODUCTS, APPS, SRC } from '@/data';
+import { ArrowRight, Phone, Mail } from 'lucide-react';
+import { CONTACT, SRC } from '@/data';
+import { SiteHeader } from '@/components/site-header';
 
 export function useMeta(title: string, description: string) {
   useEffect(() => {
@@ -47,134 +48,6 @@ const NAV = [
   { href: '/documents', label: 'Documents' },
   { href: '/contact', label: 'Contact' },
 ];
-
-function Header() {
-  const [open, setOpen] = useState<null | 'products' | 'markets' | 'drawer'>(null);
-  const [location] = useLocation();
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => setOpen(null), [location]);
-  useEffect(() => {
-    const k = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(null);
-    const c = (e: MouseEvent) => ref.current && !ref.current.contains(e.target as Node) && setOpen(null);
-    document.addEventListener('keydown', k);
-    document.addEventListener('click', c);
-    return () => {
-      document.removeEventListener('keydown', k);
-      document.removeEventListener('click', c);
-    };
-  }, []);
-
-  const toggle = (k: 'products' | 'markets' | 'drawer') => setOpen((o) => (o === k ? null : k));
-  const active = (h: string) => location === h || location.startsWith(h + '/');
-  const animal = PRODUCTS.filter((p) => p.line === 'animal');
-  const food = PRODUCTS.filter((p) => p.line === 'food');
-
-  return (
-    <header ref={ref} className="sticky top-0 z-50 no-print">
-      <div className="relative bg-[var(--deep)] text-[#FBFAF7] border-b border-[#1E3A52]">
-        <div className="wrap flex items-center justify-between gap-4 py-4">
-          <Link href="/" aria-label="Darby Trading home" className="flex shrink-0 items-center" data-testid="link-home-logo">
-            <img
-              src="/brand/DT-Mark-white.png"
-              alt="Darby Trading"
-              className="h-8 w-auto sm:h-9"
-              data-testid="img-header-logo"
-            />
-          </Link>
-          <nav aria-label="Primary" className="hidden xl:flex items-center gap-3 text-[13px] font-medium">
-            {(['markets', 'products'] as const).map((k) => (
-              <button
-                key={k}
-                type="button"
-                aria-expanded={open === k}
-                onClick={() => toggle(k)}
-                className={`flex items-center gap-1 whitespace-nowrap py-2 border-b-2 transition-colors ${open === k || (k === 'products' && active('/products')) ? 'border-[var(--leaf)] text-[#FBFAF7]' : 'border-transparent text-[#D9DEE4] hover:text-[#FBFAF7]'}`}
-                data-testid={`button-nav-${k}`}
-              >
-                {k === 'markets' ? 'Markets' : 'Products'}
-                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open === k ? 'rotate-180' : ''}`} />
-              </button>
-            ))}
-            {NAV.map((n) => (
-              <Link key={n.href} href={n.href} className={`whitespace-nowrap py-2 border-b-2 transition-colors ${active(n.href) ? 'border-[var(--leaf)] text-[#FBFAF7]' : 'border-transparent text-[#D9DEE4] hover:text-[#FBFAF7]'}`} data-testid={`link-nav-${n.href.slice(1)}`}>
-                {n.label}
-              </Link>
-            ))}
-            <Link href="/request-a-quote" className="btn btn-go shrink-0 whitespace-nowrap !py-3 !px-4" data-testid="link-nav-quote">Request a quote</Link>
-          </nav>
-          <button type="button" className="xl:hidden flex h-11 w-11 items-center justify-center rounded border border-[#5B7085]" aria-label={open === 'drawer' ? 'Close menu' : 'Open menu'} aria-expanded={open === 'drawer'} onClick={() => toggle('drawer')} data-testid="button-mobile-menu">
-            {open === 'drawer' ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
-
-        {open === 'markets' && (
-          <div className="panel-in absolute inset-x-0 top-full bg-[var(--paper)] text-[var(--ink)] shadow-[0_16px_32px_rgba(6,20,32,.25)]" data-testid="panel-markets">
-            <div className="wrap grid grid-cols-4 gap-4 py-7">
-              {[
-                ['Dairy and beef nutrition', 'More energy per pound of ration', '/products?line=animal'],
-                ['Bakery', 'Fats that hold up on the line', '/products?app=Industrial%20bakery'],
-                ['Confectionery', 'Coatings that set clean and snap', '/products?app=Compound%20chocolate%20and%20coatings'],
-                ['Distributors and blenders', 'We carry the import, you carry the product', '/trade-finance'],
-              ].map(([t, d, h], i) => (
-                <Link key={t} href={h} className="group grid gap-1 rounded-[4px] border border-[var(--rule)] bg-white p-5 hover:border-[var(--leaf)] transition-colors" data-testid={`link-market-${i}`}>
-                  <span className="eyebrow text-[var(--slate)]">0{i + 1}</span>
-                  <strong className="serif text-[19px]">{t}</strong>
-                  <span className="text-sm text-[var(--slate)]">{d}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {open === 'products' && (
-          <div className="panel-in absolute inset-x-0 top-full bg-[var(--paper)] text-[var(--ink)] shadow-[0_16px_32px_rgba(6,20,32,.25)]" data-testid="panel-products">
-            <div className="wrap grid grid-cols-[1.1fr_1.1fr_.9fr_.9fr] gap-8 py-8 text-[15px]">
-              {[['Animal nutrition', animal, 'animal'], ['Food ingredients', food, 'food']].map(([t, list, line]) => (
-                <div key={t as string} className="grid content-start gap-1.5">
-                  <Link href={`/products?line=${line}`} className="serif text-[18px] font-semibold mb-1 hover:text-[var(--leaf)]" data-testid={`link-line-${line}`}>{t as string} <span className="text-[var(--leaf)]">{(list as typeof PRODUCTS).length}</span></Link>
-                  {(list as typeof PRODUCTS).map((p) => (
-                    <Link key={p.slug} href={`/products/${p.slug}`} className="hover:text-[var(--leaf)]" data-testid={`link-menu-product-${p.slug}`}>{p.name}</Link>
-                  ))}
-                </div>
-              ))}
-              <div className="grid content-start gap-1.5">
-                <strong className="serif text-[18px] mb-1 text-[var(--slate)]">By application</strong>
-                {APPS.map((a) => (
-                  <Link key={a} href={`/products?app=${encodeURIComponent(a)}`} className="hover:text-[var(--leaf)]" data-testid={`link-menu-app-${a}`}>{a}</Link>
-                ))}
-              </div>
-              <div className="grid content-start gap-2.5 rounded-[4px] border border-[var(--rule)] bg-white p-5">
-                <strong className="serif text-[18px] mb-1 text-[var(--slate)]">Documents</strong>
-                <Link href="/documents" className="font-semibold hover:text-[var(--leaf)]" data-testid="link-menu-specs">Spec sheet library</Link>
-                <Link href="/documents" className="font-semibold hover:text-[var(--leaf)]" data-testid="link-menu-sds">Safety data sheets</Link>
-                <Link href="/compliance" className="font-semibold hover:text-[var(--leaf)]" data-testid="link-menu-certs">Certificates</Link>
-                <Link href="/request-a-quote?type=sample" className="btn btn-ink justify-center mt-2 !py-2.5" data-testid="link-menu-sample">Request a sample</Link>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {open === 'drawer' && (
-          <div className="panel-in xl:hidden border-t border-[#1E3A52] max-h-[calc(100dvh-76px)] overflow-y-auto" data-testid="panel-drawer">
-            <nav aria-label="Mobile" className="grid py-2 text-[18px] font-medium">
-              <Link href="/products" className="px-6 py-3.5" data-testid="link-mobile-products">Products</Link>
-              <Link href="/products?line=animal" className="px-10 py-2 text-base text-[#D9DEE4]" data-testid="link-mobile-animal">Animal nutrition</Link>
-              <Link href="/products?line=food" className="px-10 py-2 pb-3.5 text-base text-[#D9DEE4]" data-testid="link-mobile-food">Food ingredients</Link>
-              {NAV.map((n) => (
-                <Link key={n.href} href={n.href} className={`px-6 py-3.5 ${active(n.href) ? 'text-[var(--leaf-light)]' : ''}`} data-testid={`link-mobile-${n.href.slice(1)}`}>{n.label}</Link>
-              ))}
-            </nav>
-            <div className="grid gap-2.5 border-t border-[#1E3A52] px-6 pb-6 pt-4">
-              <Link href="/request-a-quote" className="btn btn-go justify-center" data-testid="link-mobile-quote">Request a quote</Link>
-              <a href={CONTACT.tel} className="text-center text-[#C8D0D8]" data-testid="link-mobile-phone">{CONTACT.phone}</a>
-            </div>
-          </div>
-        )}
-      </div>
-    </header>
-  );
-}
 
 function Footer() {
   return (
@@ -230,7 +103,7 @@ export function Layout({ children }: { children: ReactNode }) {
   }, [location]);
   return (
     <div className="grain min-h-[100dvh] flex flex-col overflow-x-clip bg-[var(--paper)] text-[var(--ink)]">
-      <Header />
+      <SiteHeader />
       <main className="flex-1" key={location}>{children}</main>
       <Footer />
     </div>
