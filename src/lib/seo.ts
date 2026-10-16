@@ -1,7 +1,8 @@
 import { PRODUCTS } from '../data';
 
-// Brand domain supplied for this website; never derive canonical URLs from a preview host.
-export const SITE_ORIGIN = 'https://darbyinc.com';
+// Verified live URL supplied by the owner. Switch to the custom domain only
+// after it serves this rebuild and its /social/ images publicly.
+export const SITE_ORIGIN = 'https://darby-red.vercel.app';
 export type PageMeta = { title: string; description: string; image: string; imageAlt: string; noindex?: boolean };
 const page = (title: string, description: string, image: string, imageAlt: string): PageMeta => ({
   title, description, image: `/social/${image}.jpg`, imageAlt,
